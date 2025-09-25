@@ -119,7 +119,7 @@ body {
 }
 
 .todo-list {
-  space-y: 10px;
+  appearance: 10px;
 }
 
 .todo-item {
