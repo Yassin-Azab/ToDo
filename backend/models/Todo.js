@@ -1,18 +1,17 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const todoSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: [true, 'Please add a title for the todo'],
-    trim: true,
-    maxlength: [100, 'Title cannot be more than 100 characters']
-  },
-  done: {
-    type: Boolean,
-    default: false
-  }
+    title: {
+        type: String,
+        required: [true, 'Title is required'],
+        trim: true
+    },
+    done: {
+        type: Boolean,
+        default: false
+    }
 }, {
-  timestamps: true
+    timestamps: true // This automatically creates createdAt and updatedAt
 });
 
-export default mongoose.model('Todo', todoSchema);
+module.exports = mongoose.model('Todo', todoSchema);
