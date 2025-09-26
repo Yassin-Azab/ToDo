@@ -207,6 +207,8 @@ body {
 .todo-meta {
     border-top: 1px solid #eee;
     padding-top: 10px;
+    display: flex;
+    gap: 15px;
 }
 
 .todo-meta small {
@@ -222,7 +224,7 @@ body {
     border-radius: 6px;
     margin-bottom: 20px;
     display: flex;
-    justify-content: between;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -264,5 +266,10 @@ body {
     
     .edit-input {
         width: 100%;
+    }
+
+    .todo-meta {
+        flex-direction: column;
+        gap: 5px;
     }
 }

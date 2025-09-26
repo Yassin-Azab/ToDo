@@ -13,8 +13,7 @@ const TodoForm = ({ onAdd }) => {
             await onAdd(title);
             setTitle('');
         } catch (error) {
-            console.error('Error adding todo:', error);
-            alert('Failed to add todo');
+            alert(error.message);
         } finally {
             setLoading(false);
         }

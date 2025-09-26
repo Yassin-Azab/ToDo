@@ -11,8 +11,7 @@ const TodoItem = ({ todo, onToggle, onRename, onRemove }) => {
         try {
             await onToggle(todo._id, { done: !todo.done });
         } catch (error) {
-            console.error('Error toggling todo:', error);
-            alert('Failed to update todo');
+            alert(error.message);
         } finally {
             setLoading(false);
         }
@@ -31,8 +30,7 @@ const TodoItem = ({ todo, onToggle, onRename, onRemove }) => {
             await onRename(todo._id, { title: editTitle });
             setIsEditing(false);
         } catch (error) {
-            console.error('Error renaming todo:', error);
-            alert('Failed to rename todo');
+            alert(error.message);
         } finally {
             setLoading(false);
         }
@@ -51,11 +49,18 @@ const TodoItem = ({ todo, onToggle, onRename, onRemove }) => {
             try {
                 await onRemove(todo._id);
             } catch (error) {
-                console.error('Error deleting todo:', error);
-                alert('Failed to delete todo');
+                alert(error.message);
             } finally {
                 setLoading(false);
             }
+        }
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSave();
+        } else if (e.key === 'Escape') {
+            handleCancel();
         }
     };
 
@@ -76,9 +81,10 @@ const TodoItem = ({ todo, onToggle, onRename, onRemove }) => {
                             type="text"
                             value={editTitle}
                             onChange={(e) => setEditTitle(e.target.value)}
+                            onKeyDown={handleKeyPress}
                             disabled={loading}
                             className="edit-input"
-                            onKeyPress={(e) => e.key === 'Enter' && handleSave()}
+                            autoFocus
                         />
                         <div className="edit-actions">
                             <button onClick={handleSave} disabled={loading} className="save-btn">
@@ -110,6 +116,9 @@ const TodoItem = ({ todo, onToggle, onRename, onRemove }) => {
             </div>
             <div className="todo-meta">
                 <small>Created: {new Date(todo.createdAt).toLocaleDateString()}</small>
+                {todo.updatedAt !== todo.createdAt && (
+                    <small>Updated: {new Date(todo.updatedAt).toLocaleDateString()}</small>
+                )}
             </div>
         </div>
     );
